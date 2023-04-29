@@ -18,7 +18,7 @@ class TrashArea extends StatelessWidget {
     return BlockDragTarget(
       onBlockDroped: (blockModel) {
         onBlockEnterListeneable.value = false;
-        programmingBlocks.paySound('delete.mp3');
+        programmingBlocks.playSound('delete.mp3');
         return false;
       },
       onBlockEnter: (blockmodel) {

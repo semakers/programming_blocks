@@ -22,21 +22,21 @@ class ComparationOperationSelector extends DataSelector {
         );
 
   @override
-  String dataName(data) {
+  Widget dataName(data) {
     if (data == ComparationOperation.min.toString()) {
-      return ' < ';
+      return const Text(' < ');
     } else if (data == ComparationOperation.minEqual.toString()) {
-      return ' <= ';
+      return const Text(' <= ');
     } else if (data == ComparationOperation.equal.toString()) {
-      return ' = ';
+      return const Text(' = ');
     } else if (data == ComparationOperation.diferent.toString()) {
-      return ' != ';
+      return const Text(' != ');
     } else if (data == ComparationOperation.max.toString()) {
-      return ' > ';
+      return const Text(' > ');
     } else if (data == ComparationOperation.maxEqual.toString()) {
-      return ' >= ';
+      return const Text(' >= ');
     }
 
-    return '';
+    return const SizedBox.shrink();
   }
 }

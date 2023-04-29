@@ -22,6 +22,8 @@ import 'ui/programming_blocks/controllers/programming_block_controller.dart';
 
 class ProgrammingBlocksDependency extends InheritedWidget {
   ProgrammingBlocksDependency({
+    this.runBefore,
+    this.runAfter,
     this.backgroundCanvasColor,
     Curve? creationPanelAnimationCurve,
     Duration? creationPanelAnimationDuration,
@@ -116,6 +118,8 @@ class ProgrammingBlocksDependency extends InheritedWidget {
     blockTypes.addAll(_findBlockTypes());
   }
 
+  final Future<void> Function()? runBefore;
+  final Future<void> Function()? runAfter;
   final bool enableFunctions;
   final double defaultFuntionSize;
   final List<BlockType> blockTypes = [];
@@ -155,14 +159,14 @@ class ProgrammingBlocksDependency extends InheritedWidget {
   int get dragDelay => _dragDelay;
   final player = AudioPlayer();
 
-  void paySound(String assetName) {
+  void playSound(String assetName) {
     try {
       player
           .play(
-            AssetSource(
-              assetName,
-            ),
-          )
+              AssetSource(
+                assetName,
+              ),
+              volume: 0.1)
           .then((value) => null);
     } catch (_) {}
   }

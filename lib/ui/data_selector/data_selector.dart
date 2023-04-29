@@ -63,10 +63,8 @@ abstract class DataSelector extends StatelessWidget {
                   underline: const SizedBox.shrink(),
                   items: options
                       .map((e) => DropdownMenuItem(
-                          child: Text(
-                            dataName(
-                              e,
-                            ),
+                          child: dataName(
+                            e,
                           ),
                           value: e))
                       .toList(),
@@ -88,5 +86,5 @@ abstract class DataSelector extends StatelessWidget {
         });
   }
 
-  String dataName(String data);
+  Widget dataName(String data);
 }

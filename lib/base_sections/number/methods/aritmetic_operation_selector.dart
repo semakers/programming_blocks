@@ -19,18 +19,18 @@ class AritmeticOperationSelector extends DataSelector {
         );
 
   @override
-  String dataName(data) {
+  Widget dataName(data) {
     if (data == AritmeticOperation.mul.toString()) {
-      return ' x';
+      return const Text(' x');
     } else if (data == AritmeticOperation.div.toString()) {
-      return ' /';
+      return const Text(' /');
     } else if (data == AritmeticOperation.add.toString()) {
-      return ' +';
+      return const Text(' +');
     } else if (data == AritmeticOperation.sub.toString()) {
-      return ' - ';
+      return const Text(' - ');
     } else if (data == AritmeticOperation.mod.toString()) {
-      return ' % ';
+      return const Text(' % ');
     }
-    return '';
+    return const SizedBox.shrink();
   }
 }

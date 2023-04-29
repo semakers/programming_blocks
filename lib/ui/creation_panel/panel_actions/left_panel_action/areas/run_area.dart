@@ -12,14 +12,24 @@ class RunArea extends StatelessWidget {
 
   final Widget Function(Color? enterBlockColor)? runBuilder;
 
-  void setRunningState(
-      {required ValueNotifier<RunningState> runningListenable,
-      required ProgrammingBlocksDependency programmingBlocks,
-      required RunningState runningState}) {
+  void setRunningState({
+    required ValueNotifier<RunningState> runningListenable,
+    required ProgrammingBlocksDependency programmingBlocks,
+    required RunningState runningState,
+  }) {
     runningListenable.value = runningState;
     programmingBlocks.onChangeRunningState?.call(
       runningState,
     );
+  }
+
+  Future<void> executeBlock(
+      {required ProgrammingBlocksDependency programmingBlocks,
+      required Future<void> Function() executeBlockCallback}) async {
+    await programmingBlocks.runBefore?.call();
+
+    await executeBlockCallback();
+    await programmingBlocks.runAfter?.call();
   }
 
   @override
@@ -44,9 +54,13 @@ class RunArea extends StatelessWidget {
 
         programmingBlocks.panelController.runningOperation =
             CancelableOperation.fromFuture(
-          programmingBlocks.executeBlock(
-            blockModel: blockModel,
-          ),
+          executeBlock(
+              programmingBlocks: programmingBlocks,
+              executeBlockCallback: () async {
+                await programmingBlocks.executeBlock(
+                  blockModel: blockModel,
+                );
+              }),
           onCancel: () {
             setRunningState(
               runningListenable: runningListenable,
@@ -144,12 +158,17 @@ class RunArea extends StatelessWidget {
                       );
                       programmingBlocks.panelController.runningOperation =
                           CancelableOperation.fromFuture(
-                        programmingBlocks.executeBlock(
-                          blockModel: programmingBlocks.canvasController
-                              .blockModelByFunctionUuid(
-                            functionUuid:
-                                ProgrammingBlocksDependency.mainCanvasUuid,
-                          )!,
+                        executeBlock(
+                          programmingBlocks: programmingBlocks,
+                          executeBlockCallback: () async {
+                            await programmingBlocks.executeBlock(
+                              blockModel: programmingBlocks.canvasController
+                                  .blockModelByFunctionUuid(
+                                functionUuid:
+                                    ProgrammingBlocksDependency.mainCanvasUuid,
+                              )!,
+                            );
+                          },
                         ),
                         onCancel: () {
                           setRunningState(

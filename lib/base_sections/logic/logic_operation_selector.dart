@@ -16,12 +16,12 @@ class LogicOperationSelector extends DataSelector {
         );
 
   @override
-  String dataName(data) {
+  Widget dataName(data) {
     if (data == LogicOperation.and.toString()) {
-      return ' & ';
+      return const Text(' & ');
     } else if (data == LogicOperation.or.toString()) {
-      return ' || ';
+      return const Text(' || ');
     }
-    return '';
+    return const SizedBox.shrink();
   }
 }

@@ -63,6 +63,8 @@ class ProgrammingBlocks extends StatelessWidget {
     required this.sections,
     this.stopBuilder,
     this.trashBuilder,
+    this.runBefore,
+    this.runAfter,
   })  : _dragDelay = dragDelay < 100 ? 100 : dragDelay,
         _projectModel = projectModel ??
             ProjectModelSingletonBuilder().build(
@@ -93,6 +95,8 @@ class ProgrammingBlocks extends StatelessWidget {
         ),
         super(key: key);
 
+  final Future<void> Function()? runBefore;
+  final Future<void> Function()? runAfter;
   final List<BlockType> blockTypes = [];
   final int _dragDelay;
   final ProgrammingBlocksProjectModel _projectModel;
@@ -133,6 +137,8 @@ class ProgrammingBlocks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProgrammingBlocksDependency(
+      runBefore: runBefore,
+      runAfter: runAfter,
       backgroundCanvasColor: backgroundCanvasColor,
       creationPanelAnimationCurve: creationPanelAnimationCurve,
       creationPanelAnimationDuration: creationPanelAnimationDuration,
@@ -151,6 +157,7 @@ class ProgrammingBlocks extends StatelessWidget {
       sections: sections,
       projectModel: _projectModel,
       mainFunctionName: mainFunctionName,
+      functionsSectionColor: functionsSectionColor,
       onChangeRunningState: onChangeRunningState,
       onProjectChange: onProjectChange,
       opacityScrollBars: opacityScrollBars,
